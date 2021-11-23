@@ -1,0 +1,9 @@
+<launch>
+
+  <!-- launch gazebo sim with robot -->
+  <include file="$(find ur_gazebo)/launch/ur5.launch">
+  </include>
+  
+  <node name="sinewave" pkg="neura_task" type="sine.py" respawn="true" />
+
+</launch>

@@ -1,0 +1,7 @@
+geometry_msgs/Pose pose1
+geometry_msgs/Pose pose2
+float32 lin_vel
+float32 lin_acc
+---
+bool done
+
