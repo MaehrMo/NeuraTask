@@ -3,7 +3,7 @@
 from __future__ import print_function
 import time
 import roslib; roslib.load_manifest('ur_driver')
-from beginner_tutorials.srv import desiredAngles,desiredAnglesResponse
+from neura_task.srv import desiredAngles,desiredAnglesResponse
 import rospy
 import math
 import actionlib
@@ -31,7 +31,7 @@ def handle_set_desired_angles(req):
     
     goal.trajectory.points.append(											#append the AxisAngles from service call as new Goal
         	JointTrajectoryPoint(positions=AxisAngles, velocities=[0]*6, time_from_start=rospy.Duration(duration)))
-    #d += 2
+
     rospy.loginfo(AxisAngles)												#log info of Axis Angles
     client.send_goal(goal)												#send goal to move
     return desiredAnglesResponse(client.wait_for_result()) 								#return true if reached end pos

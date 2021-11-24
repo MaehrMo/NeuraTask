@@ -43,8 +43,8 @@
 # Python 2/3 compatibility imports
 from __future__ import print_function
 from six.moves import input
-from beginner_tutorials.srv import angularOrder,angularOrderResponse
-from beginner_tutorials.srv import linearOrder,linearOrderResponse
+from neura_task.srv import angularOrder,angularOrderResponse
+from neura_task.srv import linearOrder,linearOrderResponse
 
 import sys
 import copy
@@ -115,10 +115,7 @@ class MoveGroupPythonInterface(object):
         scene = moveit_commander.PlanningSceneInterface()
 
         ## Instantiate a `MoveGroupCommander`_ object.  This object is an interface
-        ## to a planning group (group of joints).  In this tutorial the group is the primary
-        ## arm joints in the Panda robot, so we set the group's name to "panda_arm".
-        ## If you are using a different robot, change this value to the name of your robot
-        ## arm planning group.
+        ## to a planning group (group of joints).
         ## This interface can be used to plan and execute motions:
 
         group_name = "manipulator" 										#for ur5 "manipulator" is the right name
@@ -191,29 +188,22 @@ class MoveGroupPythonInterface(object):
 
         ## Now, we call the planner to compute the plan and execute it.
         plan = move_group.go(wait=True)										#move to goal
+
         # Calling `stop()` ensures that there is no residual movement
         move_group.stop()
+
         # It is always good to clear your targets after planning with poses.
         # Note: there is no equivalent function for clear_joint_value_targets()
         move_group.clear_pose_targets()
 
-        # For testing:
-        # Note that since this section of code will not be included in the tutorials
-        # we use the class variable rather than the copied state variable
         current_pose = self.move_group.get_current_pose().pose
 	all_close(pose_goal, current_pose, 0.01)
         return plan
 	
     def go_to_point_goal(self, point):
-        # Copy class variables to local variables to make the web tutorials more clear.
-        # In practice, you should use the class variables directly unless you have a good
-        # reason not to.
+
         move_group = self.move_group										#get move_group from object
 
-        ## BEGIN_SUB_TUTORIAL plan_to_pose
-        ##
-        ## Planning to a Pose Goal
-        ## ^^^^^^^^^^^^^^^^^^^^^^^
         ## We can plan a motion for this group to a desired pose for the
         ## end-effector:
         pose_goal = geometry_msgs.msg.Pose()									#get empty pose object
@@ -225,24 +215,21 @@ class MoveGroupPythonInterface(object):
         move_group.set_pose_target(pose_goal)									#set as new goal to reach
 
         ## Now, we call the planner to compute the plan and execute it.
-        plan = move_group.go(wait=True)										#move to new goal and wait until finished
+        plan = move_group.go(wait=True)									#move to new goal and wait until finished
+
         # Calling `stop()` ensures that there is no residual movement
         move_group.stop()
+
         # It is always good to clear your targets after planning with poses.
         # Note: there is no equivalent function for clear_joint_value_targets()
         move_group.clear_pose_targets()
 
-        # For testing:
-        # Note that since this section of code will not be included in the tutorials
-        # we use the class variable rather than the copied state variable
         current_pose = self.move_group.get_current_pose().pose
 	all_close(pose_goal, current_pose, 0.01)
         return plan
 
     def plan_cartesian_path(self, pose):
-        # Copy class variables to local variables to make the web tutorials more clear.
-        # In practice, you should use the class variables directly unless you have a good
-        # reason not to.
+
         move_group = self.move_group										#get move_group from object
 							
 	waypoints = []												#empty waypoint array
@@ -260,8 +247,8 @@ class MoveGroupPythonInterface(object):
         # We want the Cartesian path to be interpolated at a resolution of 1 cm
         # which is why we will specify 0.01 as the eef_step in Cartesian
         # translation.  We will disable the jump threshold by setting it to 0.0,
-        # ignoring the check for infeasible jumps in joint space, which is sufficient
-        # for this tutorial.
+        # ignoring the check for infeasible jumps in joint space, which is sufficient.
+
         (plan, fraction) = move_group.compute_cartesian_path(
             waypoints, 0.01, 0.0  # waypoints to follow  # eef_step
         )  # jump_threshold
@@ -287,9 +274,9 @@ def handle_linear_movement(input):
     done1 = linearCommander.go_to_pose_goal(input.pose1)										#PTP-Movement to pose1
     print("Reached Pose1: " + str(done1))
     
-    cartesian_plan, fraction = linearCommander.plan_cartesian_path(input.pose2)								#LIN-Movement to point2
+    cartesian_plan, fraction = linearCommander.plan_cartesian_path(input.pose2)								#plan LIN-Movement to point2
 
-    done2 = linearCommander.execute_plan(cartesian_plan)
+    done2 = linearCommander.execute_plan(cartesian_plan)										#execute LIN-Movement to point2
     print("Reached Pose2: " + str(done2))
 
     return (done1 and done2)
