@@ -6,7 +6,7 @@ https://github.com/ros-industrial/universal_robot/
 
 Steps:
 
-1. Clone this into your workspace/src/..
+1. Clone the contents of this git into your workspace/src/neura_task
 2. Build
 
 Explanation:
