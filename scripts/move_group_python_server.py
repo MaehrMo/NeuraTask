@@ -215,7 +215,7 @@ class MoveGroupPythonInterface(object):
         move_group.set_pose_target(pose_goal)									#set as new goal to reach
 
         ## Now, we call the planner to compute the plan and execute it.
-        plan = move_group.go(wait=True)									#move to new goal and wait until finished
+        plan = move_group.go(wait=True)										#move to new goal and wait until finished
 
         # Calling `stop()` ensures that there is no residual movement
         move_group.stop()
