@@ -14,7 +14,7 @@ Explanation:
 Included are 3 .launch files to start the single tasks.
 Use them to start the Gazebo-Simulation with the corresponding program.
 
-Use Rosservice call /neuraTask/ TAB  to get the service 
+Use Rosservice call /neuraTask/ TAB  to get the service.
 Another TAB to get the srv with Zeros filled in.
 
 The structure of the .srv can be found in the "srv" folder.
